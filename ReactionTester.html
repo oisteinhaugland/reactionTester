@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+    <title>Reaction Tester</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+
+    body{
+        background-color: #7FDBFF;
+    }
+
+    #box{
+        height: 250px;
+        width: 250px;
+        background-color: #7FDBFF;
+        display:none;
+        position: relative;
+    }
+
+    #stationary {
+        width: 50px;
+        height: 50px;
+
+    }
+
+    #bob {
+        height: 500px;
+        width: 1250px;
+        margin: -50px;
+    }
+
+    #header{
+        text-align: center;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        font-size: 1.5em;
+        color:#001F3F;
+        font-weight: bold;
+    }
+
+    #main{
+        visibility: hidden;
+    }
+    </style>
+</head>
+<body>
+
+
+<div id="header">
+    <div id="yourTime">
+        <h1 class="fix">Hello!</h1>
+        <p id="fix">and welcome to my...</p>
+        <h1 id="main">Reaction Tester!</h1>
+        <p>Scroll down to play, and get the best possible time!</p>
+            <p>Your time: <span id="time"></span></p></div>
+    <div id="highScore">Highscore: <span id="score"></span></div>
+</div>
+    <div id="bob">
+
+    <div id="box"></div>
+
+    </div>
+
+    <script type="text/javascript">
+    var highscore = 999;
+    var clickedTime; var CreatedTime; var reactionTime;
+    var myColors = ["#FF4136","#0074D9","#B10DC9","#FFDC00","#2ECC40","#FF851B","#111","#001f3f"]
+
+    setTimeout(function(){
+        document.getElementById("main").style.visibility="visible";
+    }, 2000);
+
+    function makeBox() {
+
+            CreatedTime = Date.now();
+
+            setTimeout(function() {
+
+            document.getElementById("box").style.display="block";
+            document.getElementById("box").style.top=Math.random()*250 + "px";
+            document.getElementById("box").style.left=Math.random()*1000 + "px";
+            var tull = Math.random()*(250-50)+50+"px";
+            document.getElementById("box").style.height=tull;
+            document.getElementById("box").style.width=tull;
+            switch(Math.floor(Math.random()*2)) {
+                case 0:document.getElementById("box").style.borderRadius="50%";
+                break;
+
+                default:document.getElementById("box").style.borderRadius="none";
+            }
+
+            document.getElementById("box").style.backgroundColor=myColors[Math.floor(Math.random()*8)];
+
+            CreatedTime = Date.now();
+
+        }, Math.random()*5000);
+
+    }
+
+    document.getElementById("box").onclick=function(){
+        clickedTime = Date.now();
+
+        reactionTime = (clickedTime - CreatedTime)/1000;
+
+        document.getElementById("time").innerHTML=reactionTime + " seconds";
+
+        if (reactionTime<highscore) {
+            highscore=reactionTime;
+            document.getElementById("score").innerHTML=reactionTime + " seconds";
+        }
+
+        this.style.display="none";
+        makeBox();
+    }
+
+    makeBox();
+    
+    </script>
+
+</body>
+</html>
